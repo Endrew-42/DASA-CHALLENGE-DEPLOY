@@ -13,6 +13,7 @@ Uso no terminal:
 """
 
 import sys
+from functools import lru_cache
 from pathlib import Path
 from typing import List, Dict, Any
 
@@ -37,6 +38,7 @@ SIMILARIDADE_MINIMA = 0.50
 
 # ── Carregamento ──────────────────────────────────────────────────────────────
 
+@lru_cache(maxsize=1)
 def carregar_modelo() -> SentenceTransformer:
     """
     Carrega o mesmo modelo usado na geração dos embeddings dos chunks.
@@ -44,6 +46,7 @@ def carregar_modelo() -> SentenceTransformer:
     return SentenceTransformer(MODELO_NOME)
 
 
+@lru_cache(maxsize=1)
 def carregar_colecao():
     """
     Conecta à base vetorial persistida no ChromaDB.
